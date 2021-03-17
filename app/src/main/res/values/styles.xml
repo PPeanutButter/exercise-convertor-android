@@ -1,0 +1,19 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppThemeLight" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorBackground">#fff</item>
+        <item name="colorPrimary">#7367EF</item>
+        <item name="colorOnPrimary">#fff</item>
+        <item name="colorAccent">?colorPrimary</item>
+        <item name="android:statusBarColor">?colorBackground</item>
+    </style>
+
+    <style name="AppThemeDark" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="colorBackground">#212121</item>
+        <item name="colorPrimary">#2292FF</item>
+        <item name="colorOnPrimary">#fff</item>
+        <item name="colorAccent">?colorPrimary</item>
+        <item name="android:statusBarColor">?colorBackground</item>
+    </style>
+
+</resources>
