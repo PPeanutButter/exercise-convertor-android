@@ -7,8 +7,9 @@ import android.util.Base64
 import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
-import java.lang.NullPointerException
 import java.util.*
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 abstract class Parser {
     var id:Int = 0
@@ -35,11 +36,11 @@ abstract class Parser {
     private val indexes = intArrayOf(0, 0, 0, 0, 0)
     var escape = 0
     private var database: DataBase? = null
-    abstract fun run(context: Context, cmd: String, func:(finish:Boolean, state:String, result:Boolean)->Unit)
+    abstract fun run(context: Context, cmd: String, func: (finish: Boolean, state: String, result: Boolean) -> Unit)
     var chapList = emptyList<String>()
 
     fun createDatabase(context: Context): DataBase {
-        database = DataBase(context, File(context.getExternalFilesDir("Database") , "parse.db").also { it.delete() }.path, null, 1)
+        database = DataBase(context, File(context.getExternalFilesDir("Database"), "parse.db").also { it.delete() }.path, null, 1)
         "a.sql".execAssetsSql(database!!.sqLiteDatabase, context)
         return database!!
     }
@@ -49,13 +50,13 @@ abstract class Parser {
     fun saveChapterName(){
         if (chapList.isNotEmpty()){
             database!!.execSQL("create table Chapter(chapId tinyint PRIMARY KEY,name text);")
-            for ((index,value) in chapList.withIndex()){
+            for ((index, value) in chapList.withIndex()){
                 database!!.execSQL("insert into Chapter values ('$index','$value')")
             }
         }
     }
     fun save(){
-        database!!.let {temp->
+        database!!.let { temp->
             when (type.toLowerCase(Locale.CHINA)) {
                 "pd" ->
                     temp.execSQL("insert into PD values ('$id','$topic','$optionList','$answer','$explain','$chapter')")
@@ -84,12 +85,12 @@ abstract class Parser {
                     e.printStackTrace()
                 }
             }
-        }catch (e:Exception){
+        }catch (e: Exception){
             e.printStackTrace()
         }
     }
 
-    fun getChapterId(chapterName:String?):Int{
+    fun getChapterId(chapterName: String?):Int{
         if (chapList.indexOf(chapterName) == -1 && chapterName!=null && chapterName.trim().isNotEmpty())
             chapList = chapList.plus(chapterName)
         return chapList.indexOf(chapterName)
@@ -105,4 +106,14 @@ abstract class Parser {
         return sb.toString()
     }
 
+    protected fun String.reportErrorToUser(github: String, regex: String):String{
+        val pattern: Pattern = Pattern.compile(regex, Pattern.MULTILINE)
+        val matcher: Matcher = pattern.matcher(this)
+        if (matcher.find()) {
+            for (i in 1..matcher.groupCount()) {
+                return "<a href=\"${github+matcher.group(i)}\">有关出错代码请访问${github+matcher.group(i)}查看</a>"
+            }
+        }
+        return this
+    }
 }

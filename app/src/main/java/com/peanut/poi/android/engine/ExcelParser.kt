@@ -40,7 +40,7 @@ class ExcelParser : Parser() {
             //check format
             val (a, b) = checkSpell(
                     real = arrayOf("Topic", "OptionList", "Result", "Explain", "Type", "Chapter"),
-                    user = arrayOf(sheet[0][0].cellValue(), sheet[0][1].cellValue(), sheet[0][2].cellValue(), sheet[0][3].cellValue(), sheet[0][4].cellValue(), sheet[0][5].cellValue()))
+                    user = arrayOf(sheet[0]?.get(0)?.cellValue(), sheet[0]?.get(1)?.cellValue(), sheet[0]?.get(2)?.cellValue(), sheet[0]?.get(3)?.cellValue(), sheet[0]?.get(4)?.cellValue(), sheet[0]?.get(5)?.cellValue()))
             if (a) {
                 for (i in 1..count) {
                     position = i
@@ -51,13 +51,13 @@ class ExcelParser : Parser() {
                         continue
                     }
                     //解决单元格格式导致的问题
-                    topic = row[0].cellValue().encode64()
+                    topic = row[0]!!.cellValue().encode64()
                     optionList = getJsonArray(row[1]?.cellValue()).encode64()
                     explain = row[3]?.cellValue()?.encode64()
                     answer = row[2]!!.cellValue()
                     val chapterName = row[5]?.cellValue()
                     chapter = getChapterId(chapterName)
-                    type = row[4].cellValue().toLowerCase(Locale.ROOT)
+                    type = row[4]!!.cellValue().toLowerCase(Locale.ROOT)
                     save()
                 }
                 saveChapterName()
@@ -76,6 +76,7 @@ class ExcelParser : Parser() {
             e.printStackTrace(PrintWriter(a))
             func.invoke(false, "处理第${position}行(题)时出现了致命错误，原因如下：", false)
             func.invoke(false, a.toString(), false)
+            func.invoke(false, a.toString().reportErrorToUser(github = "https://github.com/PPeanutButter/exercise-convertor-android/blob/master/app/src/main/java/com/peanut/poi/android/engine/ExcelParser.kt#L",regex = "ExcelParser:(.*)\\)"), false)
             func.invoke(true, "", false)
         }
     }
@@ -125,11 +126,11 @@ class ExcelParser : Parser() {
         }
     }
 
-    private operator fun Sheet.get(row: Int, column: Int) = this[row][column]
+    private operator fun Sheet.get(row: Int, column: Int) = this[row]?.get(column)
 
-    private operator fun Sheet.get(row: Int) = this.getRow(row)
+    private operator fun Sheet.get(row: Int):Row? = this.getRow(row)
 
-    private operator fun Row.get(column: Int) = this.getCell(column)
+    private operator fun Row.get(column: Int):Cell? = this.getCell(column)
 
     private fun getJsonArray(optionList: String?): String {
         if (optionList == null) return "[]"
