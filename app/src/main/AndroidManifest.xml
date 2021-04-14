@@ -12,7 +12,30 @@
         android:theme="@style/AppThemeLight">
         <activity
             android:name=".MainActivity"
-            android:exported="true" />
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:scheme="file" />
+                <data android:scheme="content" />
+                <data android:mimeType="*/*" />
+                <data android:host="*" />
+                <data android:pathPattern=".*\\.xls" />
+                <data android:pathPattern=".*\\..*\\.xls" />
+                <data android:pathPattern=".*\\..*\\..*\\.xls" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\.xls" />
+                <data android:pathPattern=".*\\.xlsx" />
+                <data android:pathPattern=".*\\..*\\.xlsx" />
+                <data android:pathPattern=".*\\..*\\..*\\.xlsx" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\.xlsx" />
+                <data android:pathPattern=".*\\.json" />
+                <data android:pathPattern=".*\\..*\\.json" />
+                <data android:pathPattern=".*\\..*\\..*\\.json" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\.json" />
+            </intent-filter>
+        </activity>
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.peanut.poi.android"

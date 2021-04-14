@@ -1,19 +1,17 @@
 {
-  "version": 1,
+  "version": 2,
   "artifactType": {
     "type": "APK",
     "kind": "Directory"
   },
   "applicationId": "com.peanut.poi.android",
-  "variantName": "release",
+  "variantName": "processReleaseResources",
   "elements": [
     {
       "type": "SINGLE",
       "filters": [],
-      "properties": [],
-      "versionCode": 52,
-      "versionName": "0.5.2",
-      "enabled": true,
+      "versionCode": 53,
+      "versionName": "0.5.3",
       "outputFile": "app-release.apk"
     }
   ]

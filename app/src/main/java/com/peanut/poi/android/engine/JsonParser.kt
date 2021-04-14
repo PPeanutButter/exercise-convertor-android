@@ -4,8 +4,9 @@ import android.content.Context
 import com.peanut.poi.android.template.Parser
 import org.json.JSONArray
 import java.io.File
+import java.io.PrintWriter
+import java.io.StringWriter
 import java.net.URLDecoder
-import java.util.*
 
 class JsonParser: Parser() {
     override fun run(context: Context, cmd: String, func: (finish: Boolean, state: String, result: Boolean) -> Unit) {
@@ -35,8 +36,10 @@ class JsonParser: Parser() {
             func.invoke(false,"处理完成",true)
             func.invoke(true,"处理完成",true)
         }catch (e:Exception){
-            e.printStackTrace()
-            func.invoke(false,"错误:${e.message}",false)
+            val a = StringWriter()
+            e.printStackTrace(PrintWriter(a))
+            func.invoke(false,"错误:$a",false)
+            func.invoke(false,"错误:${a.toString().reportErrorToUser(github = "https://github.com/PPeanutButter/exercise-convertor-android/blob/master/app/src/main/java/com/peanut/poi/android/engine/ExcelParser.kt#L",regex = "JsonParser.kt:(.*)\\)")}",false)
             func.invoke(true,"错误:${e.message}",false)
         }
     }

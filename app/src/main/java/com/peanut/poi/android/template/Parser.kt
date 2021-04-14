@@ -15,7 +15,7 @@ abstract class Parser {
     var id:Int = 0
     var topic:String = ""
     var optionList:String = ""
-    var answer:String = ""
+    var answer:String? = null
     var chapter:Int? = null
     var explain:String? = null
     var type:String = ""
@@ -111,7 +111,7 @@ abstract class Parser {
         val matcher: Matcher = pattern.matcher(this)
         if (matcher.find()) {
             for (i in 1..matcher.groupCount()) {
-                return "<a href=\"${github+matcher.group(i)}\">有关出错代码请访问${github+matcher.group(i)}查看</a>"
+                return "<a href=\"${github+matcher.group(i)}\">有关出错代码请访问<br/>${github+matcher.group(i)}查看</a>"
             }
         }
         return this

@@ -1,14 +1,12 @@
 package com.peanut.poi.android.template
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 
-@SuppressLint("Registered")
 open class PeanutActivity : AppCompatActivity() {
     protected var onActivityResultListener = mutableListOf<Pair<Int,(Int, Intent?)->Unit>>()
     private var onRequestPermissionsResultListener = mutableListOf<Pair<Int,(Array<out String>, IntArray)->Unit>>()

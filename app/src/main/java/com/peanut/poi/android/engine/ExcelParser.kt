@@ -44,7 +44,8 @@ class ExcelParser : Parser() {
             if (a) {
                 for (i in 1..count) {
                     position = i
-                    func.invoke(false, "开始处理第${position}题(行)", false)
+                    if (i<10 || i%10 == 0)
+                        func.invoke(false, "开始处理第${position}题(行)", false)
                     val row = sheet[i]
                     if (row?.getCell(0) == null || row.getCell(4) == null) {
                         escape++
@@ -54,7 +55,7 @@ class ExcelParser : Parser() {
                     topic = row[0]!!.cellValue().encode64()
                     optionList = getJsonArray(row[1]?.cellValue()).encode64()
                     explain = row[3]?.cellValue()?.encode64()
-                    answer = row[2]!!.cellValue()
+                    answer = row[2]?.cellValue()
                     val chapterName = row[5]?.cellValue()
                     chapter = getChapterId(chapterName)
                     type = row[4]!!.cellValue().toLowerCase(Locale.ROOT)
@@ -76,7 +77,7 @@ class ExcelParser : Parser() {
             e.printStackTrace(PrintWriter(a))
             func.invoke(false, "处理第${position}行(题)时出现了致命错误，原因如下：", false)
             func.invoke(false, a.toString(), false)
-            func.invoke(false, a.toString().reportErrorToUser(github = "https://github.com/PPeanutButter/exercise-convertor-android/blob/master/app/src/main/java/com/peanut/poi/android/engine/ExcelParser.kt#L",regex = "ExcelParser:(.*)\\)"), false)
+            func.invoke(false, a.toString().reportErrorToUser(github = "https://github.com/PPeanutButter/exercise-convertor-android/blob/master/app/src/main/java/com/peanut/poi/android/engine/ExcelParser.kt#L",regex = "ExcelParser.kt:(.*)\\)"), false)
             func.invoke(true, "", false)
         }
     }

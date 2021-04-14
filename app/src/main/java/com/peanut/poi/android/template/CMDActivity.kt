@@ -6,11 +6,12 @@ import android.text.SpannableString
 import android.text.Spanned
 import android.view.View
 import android.widget.TextView
+import androidx.core.text.HtmlCompat
 import java.lang.Exception
 
 open class CMDActivity : Setting(){
 
-    protected fun CMDActivity.text(text: String) = mPrint(SpannableString((text)))
+    protected fun CMDActivity.text(text: String) = mPrint(HtmlCompat.fromHtml(text,HtmlCompat.FROM_HTML_MODE_LEGACY))
     protected fun CMDActivity.text(text: Spanned) = mPrint(text)
     protected fun CMDActivity.text(text: SpannableString) = mPrint(text)
 

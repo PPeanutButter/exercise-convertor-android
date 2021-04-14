@@ -44,8 +44,8 @@ class DataBase(context: Context?, name: String?, cursorFactory: SQLiteDatabase.C
         }
     }
 
-    public fun rawQuery(sql: String?): Cursor {
-        Log.v("SQL", sql)
+    public fun rawQuery(sql: String): Cursor {
+        Log.v("SQL",sql)
         return sqLiteDatabase!!.rawQuery(sql, null)
     }
 
