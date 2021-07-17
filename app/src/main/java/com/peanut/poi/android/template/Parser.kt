@@ -27,13 +27,14 @@ abstract class Parser {
                     "dd" -> id = ++indexes[2]
                     "tk" -> id = ++indexes[3]
                     "jd" -> id = ++indexes[4]
+                    "yd" -> id = ++indexes[5]
                     else -> {
                         escape++
                     }
                 }
             }
         }
-    private val indexes = intArrayOf(0, 0, 0, 0, 0)
+    private val indexes = intArrayOf(0, 0, 0, 0, 0, 0)
     var escape = 0
     private var database: DataBase? = null
     abstract fun run(context: Context, cmd: String, func: (finish: Boolean, state: String, result: Boolean) -> Unit)
@@ -68,6 +69,9 @@ abstract class Parser {
                     temp.execSQL("insert into TK values ('$id','$topic','$optionList','$explain','$chapter')")
                 "jd" ->
                     temp.execSQL("insert into JD values ('$id','$topic','$explain','$chapter')")
+                "yd" ->{
+                    temp.execSQL("insert into YD values ('$id','$topic','$optionList','$answer','$explain','$chapter')")
+                }
                 else -> {
                 }
             }
