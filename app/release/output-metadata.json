@@ -5,13 +5,13 @@
     "kind": "Directory"
   },
   "applicationId": "com.peanut.poi.android",
-  "variantName": "processReleaseResources",
+  "variantName": "release",
   "elements": [
     {
       "type": "SINGLE",
       "filters": [],
-      "versionCode": 53,
-      "versionName": "0.5.3",
+      "versionCode": 54,
+      "versionName": "0.5.4",
       "outputFile": "app-release.apk"
     }
   ]
